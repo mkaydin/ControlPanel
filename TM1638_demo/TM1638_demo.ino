@@ -24,13 +24,10 @@ void setup()
 
 void loop()
 {
-  static uint8_t mode = COUNTING_MODE;
+  static uint8_t mode = SCROLL_MODE;
 
   switch(mode)
   {
-  case COUNTING_MODE:
-    mode += counting();
-    break;
   case SCROLL_MODE:
     mode += scroll();
     break;
@@ -61,41 +58,21 @@ void reset()
   digitalWrite(strobe_pin, HIGH);
 }
 
-bool counting()
-{
-                       /*0*/ /*1*/ /*2*/ /*3*/ /*4*/ /*5*/ /*6*/ /*7*/ /*8*/ /*9*/
-  uint8_t digits[] = { 0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f };
-
-  static uint8_t digit = 0;
-
-  sendCommand(0x40);
-  digitalWrite(strobe_pin, LOW);
-  shiftOutMod(data_pin, clock_pin, LSBFIRST, CLOCK_TYPE, CLOCK_DELAY_US, 0xc0);
-  for(uint8_t position = 0; position < 8; position++)
-  {
-    shiftOutMod(data_pin, clock_pin, LSBFIRST, CLOCK_TYPE, CLOCK_DELAY_US, digits[digit]);
-    shiftOutMod(data_pin, clock_pin, LSBFIRST, CLOCK_TYPE, CLOCK_DELAY_US, 0x00);
-  }
-
-  digitalWrite(strobe_pin, HIGH);
-
-  digit = ++digit % 10;
-  return digit == 0;
-}
-
 bool scroll()
 {
+  
   uint8_t scrollText[] =
   {
     /* */ /* */ /* */ /* */ /* */ /* */ /* */ /* */
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    /*H*/ /*E*/ /*L*/ /*L*/ /*O*/ /*.*/ /*.*/ /*.*/
-    0x76, 0x79, 0x38, 0x38, 0x3f, 0x80, 0x80, 0x80,
+    /*C*/ /*O*/ /*N*/ /*S*/ /*O*/ /*L*/ /*E*/ /* */
+    0x39, 0x3F, 0x37, 0x6D, 0x3F, 0x38, 0x79, 0x00,
     /* */ /* */ /* */ /* */ /* */ /* */ /* */ /* */
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    /*H*/ /*E*/ /*L*/ /*L*/ /*O*/ /*.*/ /*.*/ /*.*/
-    0x76, 0x79, 0x38, 0x38, 0x3f, 0x80, 0x80, 0x80,
+    /*C*/ /*O*/ /*N*/ /*S*/ /*O*/ /*L*/ /*E*/ /* */
+    0x39, 0x3F, 0x37, 0x6D, 0x3F, 0x38, 0x79, 0x00,
   };
+  
 
   static uint8_t index = 0;
   uint8_t scrollLength = sizeof(scrollText);
@@ -123,14 +100,14 @@ void buttons()
 {
   uint8_t promptText[] =
   {
-    /*P*/ /*r*/ /*E*/ /*S*/ /*S*/ /* */ /* */ /* */
-    0x73, 0x50, 0x79, 0x6d, 0x6d, 0x00, 0x00, 0x00,
     /* */ /* */ /* */ /* */ /* */ /* */ /* */ /* */
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    /*b*/ /*u*/ /*t*/ /*t*/ /*o*/ /*n*/ /*S*/ /* */
-    0x7c, 0x1c, 0x78, 0x78, 0x5c, 0x54, 0x6d, 0x00,
+    /*C*/ /*O*/ /*N*/ /*S*/ /*O*/ /*L*/ /*E*/ /* */
+    0x39, 0x3F, 0x37, 0x6D, 0x3F, 0x38, 0x79, 0x00,
     /* */ /* */ /* */ /* */ /* */ /* */ /* */ /* */
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    /*C*/ /*O*/ /*N*/ /*S*/ /*O*/ /*L*/ /*E*/ /* */
+    0x39, 0x3F, 0x37, 0x6D, 0x3F, 0x38, 0x79, 0x00,
   };
 
   static uint8_t block = 0;
