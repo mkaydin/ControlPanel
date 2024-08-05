@@ -7,7 +7,7 @@ const int strobe_pin =  4;
 const int clock_pin  = 16;
 const int data_pin   = 17;
 
-// Segment ve LED değerleri
+// Segment and LED values
 const uint8_t segmentChars[8] = {
     0x39, // C
     0x3F, // O
@@ -16,7 +16,7 @@ const uint8_t segmentChars[8] = {
     0x3F, // O
     0x38, // L
     0x79, // E
-    0x00  // boş (veya herhangi bir karakter)
+    0x00  // free
 };
 
 void setup()
@@ -32,14 +32,14 @@ void setup()
 void loop()
 {
   displayText();
-  delay(1000);  // 1 saniye bekle
+  delay(1000); 
 }
 
 void displayText()
 {
   for (int i = 0; i < 8; i++)
   {
-    sendCommand(0xC0 + i*2);     // İlgili adresi seç
+    sendCommand(0xC0 + i*2);     // choose address
     shiftOutMod(data_pin, clock_pin, LSBFIRST, CLOCK_TYPE, CLOCK_DELAY_US, segmentChars[i]);
   }
 }
