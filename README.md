@@ -1,7 +1,3 @@
-Sure! Below is a sample README file for your GitHub project related to a home automation system with Raspberry Pi and relay system. The file also includes the necessary markdown to display the image you mentioned, "temel.jpeg":
-
----
-
 # Home Automation System with Raspberry Pi and Relay Module
 
 This project is a home automation system built using a **Raspberry Pi** and a **Relay Module**. The goal is to control household appliances (such as lights, fans, etc.) remotely via a web interface or a custom app. The system makes use of the GPIO pins on the Raspberry Pi to interface with the relay module, allowing you to control the connected devices.
